@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b100d">
+    <meta name="description" content="Controle e demonstração da pilha de limão Lemon Power pelo Wi-Fi do ESP8266.">
+    <title>Lemon Power | Energia que conecta</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Lemon Power, início">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M31.9 8.1C21.2 7.3 11.8 10.3 8 18.1c-3.2 6.6.8 13.8 7.8 14.1 9.4.4 15.8-8.2 16.1-24.1Z" fill="currentColor"/>
+              <path d="M13.5 27.2c4.2-6.2 9.2-10.7 15.1-13.5" stroke="#0b100d" stroke-width="2" stroke-linecap="round"/>
+              <path d="M27.4 7.8c1.6-2.4 4.1-3.4 6.7-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="brand-name">lemon<span>power</span></span>
+        </a>
+        <div class="topbar-note"><span class="live-dot"></span> PROJETO DE CIÊNCIAS <span class="note-divider">/</span> WI-FI LOCAL</div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span> CIÊNCIA EM MOVIMENTO</p>
+            <h1>Uma ideia simples.<br>Uma energia <span>surpreendente.</span></h1>
+            <p class="hero-description">Uma pilha feita de limão, um NodeMCU ESP-12E Amica e um toque no celular. Explore como a energia química pode virar luz.</p>
+            <div class="energy-tag"><span class="energy-icon" aria-hidden="true">ϟ</span> ALIMENTADO POR UMA PILHA DE LIMÃO</div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="art-glow"></div>
+            <svg class="lemon-art" viewBox="0 0 260 220" fill="none">
+              <path d="M128 35c17-17 38-19 52-11-7 10-18 17-35 18" stroke="#9ee64d" stroke-width="5" stroke-linecap="round"/>
+              <path d="M128 47c49-18 109 16 110 68 1 50-48 88-107 85C72 198 19 163 21 111 23 59 78 30 128 47Z" fill="url(#lemonFill)" stroke="#d5ff75" stroke-width="3"/>
+              <path d="M57 87c12-19 35-31 59-30" stroke="#f3ffb6" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/>
+              <path d="M60 151c16 18 42 28 72 29" stroke="#7ba92c" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/>
+              <path d="M132 80v63m-22-22h44" stroke="#fbfff3" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="132" cy="112" r="39" stroke="#fff" stroke-opacity=".23" stroke-width="1.5"/>
+              <path d="M176 101c11 3 20 11 24 21" stroke="#fff" stroke-opacity=".32" stroke-width="2" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="lemonFill" x1="44" y1="47" x2="207" y2="192" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#d7ff70"/>
+                  <stop offset=".52" stop-color="#a9e83b"/>
+                  <stop offset="1" stop-color="#5f9b27"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="art-label label-top">Zn + Cu</span>
+            <span class="art-label label-bottom">ENERGIA QUÍMICA</span>
+            <span class="spark spark-one">✳</span>
+            <span class="spark spark-two">✦</span>
+          </div>
+        </section>
+
+        <section class="control-layout" aria-labelledby="control-title">
+          <div class="control-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">PAINEL DE CONTROLE</p>
+                <h2 id="control-title">Seu circuito, conectado.</h2>
+              </div>
+              <div class="connection-pill" id="connection-pill" data-state="disconnected">
+                <span class="status-dot"></span>
+                <span id="connection-label">Desconectado</span>
+              </div>
+            </div>
+
+            <button class="connect-button" id="connect-button" type="button">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 7.5a11 11 0 0 1 15 0M5.5 10.5a6.5 6.5 0 0 1 9 0M8.5 13.5a2 2 0 0 1 3 0M10 16.5h.01" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <span>Verificar conexão Wi-Fi</span>
+              <span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+            <p class="connection-hint">Conecte-se à rede <strong>LemonPower</strong> (senha <strong>lemonpower</strong>) antes de verificar. Abra o app pelo endereço IP local do computador que está servindo a página.</p>
+
+            <div class="led-panel">
+              <div class="led-status">
+                <span class="led-icon" id="led-icon" data-state="unknown"><span></span></span>
+                <div>
+                  <p class="field-label">ESTADO DO LED FÍSICO</p>
+                  <p class="led-state" id="led-state" aria-live="polite">Aguardando conexão</p>
+                </div>
+              </div>
+              <div class="control-buttons">
+                <button class="led-button led-on" id="turn-on-button" type="button" disabled>
+                  <span class="button-symbol" aria-hidden="true">ϟ</span> LIGAR LED
+                </button>
+                <button class="led-button led-off" id="turn-off-button" type="button" disabled>
+                  <span class="button-symbol" aria-hidden="true">◯</span> DESLIGAR LED
+                </button>
+              </div>
+            </div>
+            <p class="message" id="message" role="status" aria-live="polite">Conecte-se ao LemonPower para controlar o circuito.</p>
+
+            <div class="simulation">
+              <div class="simulation-copy">
+                <span class="simulation-icon" aria-hidden="true">◌</span>
+                <div>
+                  <p class="simulation-title">Sem NodeMCU por perto?</p>
+                  <p class="simulation-description" id="simulation-description">Demonstre a interface sem se conectar a um dispositivo real.</p>
+                </div>
+              </div>
+              <button class="simulation-button" id="simulation-button" type="button">Iniciar demonstração</button>
+              <div class="simulation-demo" id="simulation-demo" hidden>
+                <div class="simulation-led-status">
+                  <span class="simulation-led-icon" id="simulation-led-icon" data-state="off"><span></span></span>
+                  <span id="simulation-led-state">Simulação: LED desligado</span>
+                </div>
+                <div class="simulation-controls" aria-label="Controles da demonstração visual">
+                  <button class="simulation-control-button" id="simulate-on-button" type="button">Simular ligado</button>
+                  <button class="simulation-control-button" id="simulate-off-button" type="button">Simular desligado</button>
+                </div>
+              </div>
+            </div>
+            <p class="simulation-notice" id="simulation-notice" hidden>SIMULAÇÃO VISUAL — o LED físico não está sendo controlado.</p>
+          </div>
+
+          <aside class="science-card">
+            <div class="science-heading">
+              <span class="science-icon" aria-hidden="true">✳</span>
+              <p class="eyebrow">A CIÊNCIA POR TRÁS</p>
+            </div>
+            <h2>Pequena pilha.<br><span>Grande descoberta.</span></h2>
+            <p class="science-description">O suco ácido do limão funciona como eletrólito. Dois metais diferentes, como zinco e cobre, participam de reações químicas que criam uma diferença de potencial elétrico.</p>
+            <div class="energy-flow" aria-label="A pilha de limão fornece energia ao circuito e o ESP8266 controla o LED por Wi-Fi">
+              <div class="flow-node">
+                <span class="flow-symbol lemon-symbol" aria-hidden="true">◒</span>
+                <span>PILHA DE<br>LIMÃO</span>
+              </div>
+              <span class="flow-line" aria-hidden="true"><i></i></span>
+              <div class="flow-node">
+                <span class="flow-symbol chip-symbol" aria-hidden="true">▦</span>
+                <span>CONTROLE<br>ESP8266</span>
+              </div>
+              <span class="flow-line" aria-hidden="true"><i></i></span>
+              <div class="flow-node">
+                <span class="flow-symbol light-symbol" aria-hidden="true">✧</span>
+                <span>LUZ<br>LED</span>
+              </div>
+            </div>
+            <p class="science-footnote"><span>i</span> A tensão e a corrente dependem da pilha. Meça antes de escolher o LED e o resistor; pode ser necessário usar várias células em série.</p>
+          </aside>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>LEMON POWER <span class="footer-separator">·</span> CIÊNCIA FEITA POR VOCÊ</span>
+        <span>CONTROLE SEM FIO <span class="footer-separator">·</span> BLUETOOTH LOW ENERGY</span>
+      </footer>
+    </div>
+  </body>
+</html>
